@@ -30,7 +30,7 @@ def check_path(_path):
 
             try:
                 if flag == '1':
-                    _path = raw_input(unicode('>>>[+] 请输入目标文件路径。\n>>>[+] ').encode('gbk'))
+                    _path = raw_input(unicode('>>>[+] 请输入目标文件路径。\n>>>[+] ').encode('utf-8'))
                     check_path(_path)
                 else:
                     # 清空存储路径
@@ -204,7 +204,8 @@ if __name__=="__main__":
     bs1 = BeautifulSoup(html2, 'lxml')
     tr = bs1.h3.a.attrs['title']
     # mkpath="d:/qttc/movies/"+'-'.join(tr.split('/'))
-    mkpath = "d:/qttc/movies/" + _path
+    #mkpath = "d:/qttc/movies/" + _path
+    mkpath = _path
     mkdir(mkpath)
     hlist = bs1.find('ul', class_="nav nav-pills").find_all('a')
     hlist = ['http://532movie.bnu.edu.cn' + x.attrs['href'] for x in hlist]
