@@ -203,47 +203,54 @@ if __name__=="__main__":
     html2 = req2.content
     bs1 = BeautifulSoup(html2, 'lxml')
     tr = bs1.h3.a.attrs['title']
-    # mkpath="d:/qttc/movies/"+'-'.join(tr.split('/'))
-    #mkpath = "d:/qttc/movies/" + _path
-    mkpath = _path
+    #mkpath="d:/qttc/movies/"+'-'.join(tr.split('/'))
+    mkpath = "C:/Users/chencanyi/Downloads/AutoLoginOneBnu/532Movie/" + _path
+    #mkpath = _path
     mkdir(mkpath)
     hlist = bs1.find('ul', class_="nav nav-pills").find_all('a')
     hlist = ['http://532movie.bnu.edu.cn' + x.attrs['href'] for x in hlist]
 
     _path = mkpath
-    i = 1
-    for _url in hlist:
-        try:
-            req1 = s.get(_url)
+    #i = 1
+    #for _url in hlist:
+    #try:
+    _url=hlist[0]
+    req1 = s.get(_url)
 
-            html = req1.content
+    html = req1.content
 
-            bs = BeautifulSoup(html, "lxml")
+    bs = BeautifulSoup(html, "lxml")
 
-            txt = bs.find_all('script')[-1]
+    txt = bs.find_all('script')[-1]
 
-            a = re.search('playlist="[^"]*"', str(txt.text))
+    a = re.search('playlist="[^"]*"', str(txt.text))
 
-            str1 = a.group()
+    str1 = a.group()
 
-            str2 = str1.split('=')[1].split('+++')
+    #print str1+'\n'
 
-            str3 = [x.strip('"') for x in str2]
+    str2 = str1.split('+++')
 
-            str3
+    
 
-            str3[0]
+    str2=[x.strip('"').strip('playlist="') for x in str2]
 
-            preurl = "http://172.16.215.40:5320/"
+    #print str2
 
-            downfilm = preurl + str3[0]
+    preurl = "http://172.16.215.40:5320/"
+
+    Downfilm = [preurl + x for x in str2]
             # _url=downfilm
             # storage_path = check_path(_path)
-            storage_path = _path
-            cmde = 'ffmpeg -i ' + downfilm + ' -c copy ' + storage_path + '/' + str(i) + '.mp4'
-            os.system(cmde)
-            i += 1
-            # movie_url = get_url(_url, storage_path)
-            # download_movie(movie_url, storage_path)
-        except Exception as e:
-            print e
+    i=1
+    storage_path = _path
+    for downfilm in Downfilm:
+        cmde = 'ffmpeg -i ' + downfilm + ' -c copy ' + storage_path + '/' + str(i) + '.mp4'
+        #print cmde+'\n'
+        os.system(cmde)
+
+        i += 1
+    # movie_url = get_url(_url, storage_path)
+    # download_movie(movie_url, storage_path)
+    #    except Exception as e:
+    #        print e
