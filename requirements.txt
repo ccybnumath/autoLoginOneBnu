@@ -30,7 +30,7 @@ jupyter==1.0.0
 jupyter-client==5.1.0
 jupyter-console==5.2.0
 jupyter-core==4.3.0
-lxml==3.8.0
+lxml==4.6.3
 m3u8==0.3.5
 MarkupSafe==1.0
 mechanize==0.3.6
